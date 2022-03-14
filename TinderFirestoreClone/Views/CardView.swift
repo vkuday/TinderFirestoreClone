@@ -10,6 +10,7 @@ import UIKit
 class CardView: UIView {
     
     fileprivate let imageView = UIImageView(image: #imageLiteral(resourceName: "lady5c"))
+    fileprivate let threshold: CGFloat = 80
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,7 +29,7 @@ class CardView: UIView {
         case .changed:
             handleChanged(gesture)
         case .ended:
-            handleEnded()
+            handleEnded(gesture)
         default:
             break
         }
@@ -36,12 +37,23 @@ class CardView: UIView {
     
     fileprivate func handleChanged(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: nil)
-        self.transform = CGAffineTransform(translationX: translation.x, y: translation.y)
+        let degrees: CGFloat = translation.x / 20
+        let angle = degrees * .pi / 180
+        
+        let rotationalTransformation = CGAffineTransform(rotationAngle: angle)
+        self.transform = rotationalTransformation.translatedBy(x: translation.x, y: translation.y)
     }
     
-    fileprivate func handleEnded() {
+    fileprivate func handleEnded(_ gesture: UIPanGestureRecognizer) {
+        let shouldDismissCard = gesture.translation(in: nil).x > threshold
+        
         UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut) {
-            self.transform = .identity
+            if shouldDismissCard {
+                let offScreenTransform = self.transform.translatedBy(x: 1000, y: 0)
+                self.transform = offScreenTransform
+            } else {
+                self.transform = .identity
+            }
         }
     }
     
