@@ -22,6 +22,7 @@
 		3F72E17227E4415E00AC7320 /* Advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F72E17127E4415E00AC7320 /* Advertiser.swift */; };
 		3F72E17427F25DC800AC7320 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F72E17327F25DC800AC7320 /* RegistrationController.swift */; };
 		3F72E17627F27CB200AC7320 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F72E17527F27CB200AC7320 /* CustomTextField.swift */; };
+		3FF2D12827F4EABC00F5D6B1 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF2D12727F4EABC00F5D6B1 /* RegistrationViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		3F72E17127E4415E00AC7320 /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
 		3F72E17327F25DC800AC7320 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		3F72E17527F27CB200AC7320 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		3FF2D12727F4EABC00F5D6B1 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 			children = (
 				3F184AA127DAD08200F1FF9A /* HomeController.swift */,
 				3F72E17327F25DC800AC7320 /* RegistrationController.swift */,
+				3FF2D12727F4EABC00F5D6B1 /* RegistrationViewModel.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -215,6 +218,7 @@
 				3F72E17427F25DC800AC7320 /* RegistrationController.swift in Sources */,
 				3F184AB827DC1CE900F1FF9A /* TopNavigationStackView.swift in Sources */,
 				3F72E17627F27CB200AC7320 /* CustomTextField.swift in Sources */,
+				3FF2D12827F4EABC00F5D6B1 /* RegistrationViewModel.swift in Sources */,
 				3F184AB327DAD92800F1FF9A /* Extensions+UIView.swift in Sources */,
 				3F184AA027DAD08200F1FF9A /* SceneDelegate.swift in Sources */,
 				3F23B13227E2801B00CE6C2C /* CardViewModel.swift in Sources */,

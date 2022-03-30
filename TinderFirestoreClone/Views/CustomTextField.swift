@@ -2,7 +2,6 @@
 //  CustomTextField.swift
 //  TinderFirestoreClone
 //
-//  Created by yupana on 3/28/22.
 //  Copyright © 2022 Volkan Kuday. All rights reserved.
 //
 
