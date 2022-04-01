@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  TinderFirestoreClone
 //
-//  Created by yupana on 3/10/22.
+//  Created by volkan on 3/10/22.
 //
 
 import UIKit

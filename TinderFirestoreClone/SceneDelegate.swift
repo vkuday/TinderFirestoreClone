@@ -2,10 +2,11 @@
 //  SceneDelegate.swift
 //  TinderFirestoreClone
 //
-//  Created by yupana on 3/10/22.
+//  Created by volkan on 3/10/22.
 //
 
 import UIKit
+import Firebase
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -17,6 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        FirebaseApp.configure()
         
         self.window = UIWindow(windowScene: windowScene)
         window?.rootViewController = RegistrationController()

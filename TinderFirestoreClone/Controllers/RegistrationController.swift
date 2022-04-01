@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import JGProgressHUD
 
 class RegistrationController: UIViewController {
     
@@ -21,7 +23,7 @@ class RegistrationController: UIViewController {
         return button
     }()
     
-    let fullNameTextField: UITextField = {
+    lazy var fullNameTextField: UITextField = {
         let tf = CustomTextField(padding: 16)
         tf.placeholder = "Enter full name"
         tf.backgroundColor = #colorLiteral(red: 0.8548915668, green: 0.8548915668, blue: 0.8548915668, alpha: 1)
@@ -29,7 +31,7 @@ class RegistrationController: UIViewController {
         return tf
     }()
     
-    let emailTextField: UITextField = {
+    lazy var emailTextField: UITextField = {
         let tf = CustomTextField(padding: 16)
         tf.placeholder = "Enter email"
         tf.keyboardType = .emailAddress
@@ -38,7 +40,7 @@ class RegistrationController: UIViewController {
         return tf
     }()
     
-    let passwordTextField: UITextField = {
+    lazy var passwordTextField: UITextField = {
         let tf = CustomTextField(padding: 16)
         tf.placeholder = "Enter password"
         tf.isSecureTextEntry = true
@@ -57,7 +59,7 @@ class RegistrationController: UIViewController {
         }
     }
     
-    let registerButton: UIButton = {
+    lazy var registerButton: UIButton = {
         let button = UIButton()
         button.setTitle("Register", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
@@ -67,8 +69,32 @@ class RegistrationController: UIViewController {
         button.isEnabled = false
         button.layer.cornerRadius = 22
         button.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
         return button
     }()
+    
+    @objc fileprivate func handleRegister() {
+        self.handleTapDismiss()
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        Auth.auth().createUser(withEmail: email, password: password) { result, err in
+            if let err = err {
+                print(err)
+                self.showHUDWithError(error: err)
+                return
+            }
+            
+            print("Successfully registered user:", result?.user.uid ?? "")
+        }
+    }
+    
+    fileprivate func showHUDWithError(error: Error) {
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Failed registration"
+        hud.detailTextLabel.text = error.localizedDescription
+        hud.show(in: self.view)
+        hud.dismiss(afterDelay: 4)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
