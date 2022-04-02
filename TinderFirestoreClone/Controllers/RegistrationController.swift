@@ -12,7 +12,7 @@ import JGProgressHUD
 
 class RegistrationController: UIViewController {
     
-    let selectPhotoButton: UIButton = {
+    lazy var selectPhotoButton: UIButton = {
         let button = UIButton()
         button.setTitle("Select Photo", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 32, weight: .heavy)
@@ -20,6 +20,9 @@ class RegistrationController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.heightAnchor.constraint(equalToConstant: 275).isActive = true
         button.layer.cornerRadius = 16
+        button.addTarget(self, action: #selector(handleSelectPhoto), for: .touchUpInside)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.clipsToBounds = true
         return button
     }()
     
@@ -48,6 +51,12 @@ class RegistrationController: UIViewController {
         tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return tf
     }()
+    
+    @objc func handleSelectPhoto() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        present(imagePickerController, animated: true)
+    }
     
     @objc fileprivate func handleTextChange(textField: UITextField) {
         if textField == fullNameTextField {
@@ -111,7 +120,8 @@ class RegistrationController: UIViewController {
     let registrationViewModel = RegistrationViewModel()
     
     fileprivate func setupRegistrationViewModelObserver() {
-        registrationViewModel.isFormValidObserver = { [unowned self] isFormValid in
+        registrationViewModel.bindableIsFormValid.bind { [unowned self] isFormValid in
+            guard let isFormValid = isFormValid else { return }
             self.registerButton.isEnabled = isFormValid
             if isFormValid {
                 self.registerButton.backgroundColor = #colorLiteral(red: 1, green: 0.1340694979, blue: 0.5010345965, alpha: 1)
@@ -120,6 +130,9 @@ class RegistrationController: UIViewController {
                 self.registerButton.backgroundColor = .lightGray
                 self.registerButton.setTitleColor(.gray, for: .normal)
             }
+        }
+        registrationViewModel.bindableImage.bind { [unowned self] image in
+            self.selectPhotoButton.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
         }
     }
     
@@ -200,5 +213,18 @@ class RegistrationController: UIViewController {
         gradientLayer.locations = [0, 1]
         gradientLayer.frame = view.bounds
         view.layer.addSublayer(gradientLayer)
+    }
+}
+
+extension RegistrationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[.originalImage] as? UIImage
+        registrationViewModel.bindableImage.value = image
+        dismiss(animated: true)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
     }
 }
