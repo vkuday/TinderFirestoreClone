@@ -82,22 +82,22 @@ class RegistrationController: UIViewController {
         return button
     }()
     
+    let registeringHUD = JGProgressHUD(style: .dark)
+    
     @objc fileprivate func handleRegister() {
         self.handleTapDismiss()
-        guard let email = emailTextField.text else { return }
-        guard let password = passwordTextField.text else { return }
-        Auth.auth().createUser(withEmail: email, password: password) { result, err in
+        registrationViewModel.bindableIsRegistering.value = true
+        registrationViewModel.performRegistration { [weak self] err in
+            guard let self = self else { return }
             if let err = err {
-                print(err)
                 self.showHUDWithError(error: err)
                 return
             }
-            
-            print("Successfully registered user:", result?.user.uid ?? "")
         }
     }
     
     fileprivate func showHUDWithError(error: Error) {
+        registeringHUD.dismiss()
         let hud = JGProgressHUD(style: .dark)
         hud.textLabel.text = "Failed registration"
         hud.detailTextLabel.text = error.localizedDescription
@@ -134,6 +134,14 @@ class RegistrationController: UIViewController {
         registrationViewModel.bindableImage.bind { [unowned self] image in
             self.selectPhotoButton.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
         }
+        registrationViewModel.bindableIsRegistering.bind { [unowned self] isRegistering in
+            if isRegistering == true {
+                self.registeringHUD.textLabel.text = "Register"
+                self.registeringHUD.show(in: self.view)
+            } else {
+                self.registeringHUD.dismiss()
+            }
+        }
     }
     
     fileprivate func setupTapGesture() {
@@ -152,7 +160,7 @@ class RegistrationController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self)
+//        NotificationCenter.default.removeObserver(self)
     }
     
     @objc fileprivate func handleKeyboardHide() {
