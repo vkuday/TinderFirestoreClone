@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import SDWebImage
+import JGProgressHUD
 
 class CustomImagePickerController: UIImagePickerController {
     
@@ -127,11 +128,14 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
         case 1:
             cell.textField.placeholder = "Enter Name"
             cell.textField.text = user?.name
+            cell.textField.addTarget(self, action: #selector(handleNameChange), for: .editingChanged)
         case 2:
             cell.textField.placeholder = "Enter Profession"
             cell.textField.text = user?.profession
+            cell.textField.addTarget(self, action: #selector(handleProfessionChange), for: .editingChanged)
         case 3:
             cell.textField.placeholder = "Enter Age"
+            cell.textField.addTarget(self, action: #selector(handleAgeChange), for: .editingChanged)
             if let age = user?.age {
                 cell.textField.text = String(age)
             }
@@ -140,6 +144,18 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
         }
         
         return cell
+    }
+    
+    @objc fileprivate func handleNameChange(textField: UITextField) {
+        self.user?.name = textField.text
+    }
+    
+    @objc fileprivate func handleProfessionChange(textField: UITextField) {
+        self.user?.profession = textField.text
+    }
+    
+    @objc fileprivate func handleAgeChange(textField: UITextField) {
+        self.user?.age = Int(textField.text ?? "")
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -182,7 +198,21 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
     }
     
     @objc fileprivate func handleSave() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        print(user)
+        let docData: [String: Any] = ["uid": uid, "fullName": user?.name ?? "", "imageUrl1": user?.imageUrl1 ?? "", "age": user?.age ?? -1, "profession": user?.profession ?? ""]
         
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Saving settings"
+        hud.show(in: view)
+        Firestore.firestore().collection("users").document(uid).setData(docData) { err in
+            hud.dismiss()
+            if let err = err {
+                print("Failed to save user settings", err)
+                return
+            }
+            print("Finished saving user info")
+        }
     }
     
     @objc fileprivate func handleLogout() {
