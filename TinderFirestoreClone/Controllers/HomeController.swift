@@ -41,14 +41,14 @@ class HomeController: UIViewController {
         let hud = JGProgressHUD(style: .dark)
         hud.textLabel.text = "Fetching Users"
         hud.show(in: view)
-        let query = Firestore.firestore().collection("users").order(by: "uid").start(after: [lastFetchedUser?.uid ?? ""]).limit(to: 2)
+     
+        let query = Firestore.firestore().collection("users").order(by: "uid")
         query.getDocuments { snapshot, err in
             hud.dismiss()
             if let error = err {
                 print("Failed to fetch users:", error)
                 return
             }
-            
             snapshot?.documents.forEach({ documentSnapshot in
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
