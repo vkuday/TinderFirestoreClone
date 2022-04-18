@@ -10,13 +10,17 @@ import Firebase
 import SDWebImage
 import JGProgressHUD
 
+protocol SettingsControllerDelegate {
+    func didSaveSettings()
+}
+
 class CustomImagePickerController: UIImagePickerController {
-    
     var imageButton: UIButton?
-    
 }
 
 class SettingsController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    var delegate: SettingsControllerDelegate?
     
     var user: User?
     
@@ -291,6 +295,9 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
                 return
             }
             print("Finished saving user info")
+            self.dismiss(animated: true) {
+                self.delegate?.didSaveSettings()
+            }
         }
     }
     

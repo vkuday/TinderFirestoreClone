@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 import JGProgressHUD
 
-class HomeController: UIViewController {
+class HomeController: UIViewController, SettingsControllerDelegate {
     
     let topStackView = TopNavigationStackView()
     let cardsDeckView = UIView()
@@ -25,8 +25,25 @@ class HomeController: UIViewController {
         bottomControls.refreshButton.addTarget(self, action: #selector(handleRefresh), for: .touchUpInside)
         
         setupLayout()
-        setupFirestoreUserCards()
-        fetchUsersFromFirestore()
+        fetchCurrentUser()
+//        setupFirestoreUserCards()
+//        fetchUsersFromFirestore()
+    }
+    
+    fileprivate var user: User?
+    
+    fileprivate func fetchCurrentUser() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        Firestore.firestore().collection("users").document(uid).getDocument { snapshot, err in
+            if let err = err {
+                print(err)
+                return
+            }
+            
+            guard let dictionary = snapshot?.data() else { return }
+            self.user = User(dictionary: dictionary)
+            self.fetchUsersFromFirestore()
+        }
     }
     
     @objc func handleRefresh() {
@@ -35,14 +52,14 @@ class HomeController: UIViewController {
     
     var lastFetchedUser: User?
     
-    // MARK:- Fileprivate
-    
     fileprivate func fetchUsersFromFirestore() {
+        guard let minAge = user?.minSeekingAge, let maxAge = user?.maxSeekingAge else { return }
+        
         let hud = JGProgressHUD(style: .dark)
         hud.textLabel.text = "Fetching Users"
         hud.show(in: view)
      
-        let query = Firestore.firestore().collection("users").order(by: "uid")
+        let query = Firestore.firestore().collection("users").whereField("age", isGreaterThanOrEqualTo: minAge).whereField("age", isLessThanOrEqualTo: maxAge)
         query.getDocuments { snapshot, err in
             hud.dismiss()
             if let error = err {
@@ -69,9 +86,14 @@ class HomeController: UIViewController {
     
     @objc fileprivate func handleSettings() {
         let settingsController = SettingsController()
+        settingsController.delegate = self
         let navController = UINavigationController(rootViewController: settingsController)
         navController.modalPresentationStyle = .fullScreen
         present(navController, animated: true)
+    }
+    
+    func didSaveSettings() {
+        fetchCurrentUser()
     }
     
     fileprivate func setupFirestoreUserCards() {
