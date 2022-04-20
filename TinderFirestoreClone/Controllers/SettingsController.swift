@@ -302,6 +302,7 @@ class SettingsController: UITableViewController, UIImagePickerControllerDelegate
     }
     
     @objc fileprivate func handleLogout() {
-        
+        try? Auth.auth().signOut()
+        dismiss(animated: true)
     }
 }
