@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 import JGProgressHUD
 
-class HomeController: UIViewController, SettingsControllerDelegate, LoginControllerDelegate {
+class HomeController: UIViewController, SettingsControllerDelegate, LoginControllerDelegate, CardViewDelegate {
     
     let topStackView = TopNavigationStackView()
     let cardsDeckView = UIView()
@@ -38,9 +38,9 @@ class HomeController: UIViewController, SettingsControllerDelegate, LoginControl
             present(navController, animated: true)
         }
     }
-    
+
     func didFinishLoggingIn() {
-        fetchCurrentUser()
+        fetchSwipes()
     }
     
     fileprivate let hud = JGProgressHUD(style: .dark)
@@ -67,8 +67,8 @@ class HomeController: UIViewController, SettingsControllerDelegate, LoginControl
     fileprivate func fetchSwipes() {
         hud.textLabel.text = "Loading"
         hud.show(in: view)
-        
         guard let uid = Auth.auth().currentUser?.uid else { return }
+        
         Firestore.firestore().collection("swipes").document(uid).getDocument { snapshot, err in
             if let err = err {
                 print("Failed to fetch swipes info for current user:", err)
@@ -104,19 +104,28 @@ class HomeController: UIViewController, SettingsControllerDelegate, LoginControl
             snapshot?.documents.forEach({ documentSnapshot in
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
-                self.cardViewModels.append(user.toCardViewModel())
-                self.lastFetchedUser = user
-                self.setupCardFromUser(user: user)
+                if user.uid != Auth.auth().currentUser?.uid {
+                    self.setupCardFromUser(user: user)
+                }
+//                self.cardViewModels.append(user.toCardViewModel())
+//                self.lastFetchedUser = user
             })
         }
     }
     
     fileprivate func setupCardFromUser(user: User) {
         let cardView = CardView()
+        cardView.delegate = self
         cardView.cardViewModel = user.toCardViewModel()
         cardsDeckView.addSubview(cardView)
         cardsDeckView.sendSubviewToBack(cardView)
         cardView.fillSuperview()
+    }
+    
+    func didTapMoreInfo() {
+        let userDetailsController = UserDetailsController()
+        userDetailsController.modalPresentationStyle = .fullScreen
+        present(userDetailsController, animated: true)
     }
     
     @objc fileprivate func handleSettings() {
