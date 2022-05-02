@@ -68,7 +68,6 @@ class HomeController: UIViewController, SettingsControllerDelegate, LoginControl
         hud.textLabel.text = "Loading"
         hud.show(in: view)
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        
         Firestore.firestore().collection("swipes").document(uid).getDocument { snapshot, err in
             if let err = err {
                 print("Failed to fetch swipes info for current user:", err)
@@ -93,7 +92,7 @@ class HomeController: UIViewController, SettingsControllerDelegate, LoginControl
     
     fileprivate func fetchUsersFromFirestore() {
         guard let minAge = user?.minSeekingAge, let maxAge = user?.maxSeekingAge else { return }
-     
+
         let query = Firestore.firestore().collection("users").whereField("age", isGreaterThanOrEqualTo: minAge).whereField("age", isLessThanOrEqualTo: maxAge)
         query.getDocuments { snapshot, err in
             self.hud.dismiss()
