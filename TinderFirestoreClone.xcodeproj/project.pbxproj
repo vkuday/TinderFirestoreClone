@@ -31,6 +31,7 @@
 		3F72E17627F27CB200AC7320 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F72E17527F27CB200AC7320 /* CustomTextField.swift */; };
 		3F8BD5CF27F9799E002B4776 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F8BD5CE27F9799E002B4776 /* GoogleService-Info.plist */; };
 		3FD2DE04281CC9AC00A8A279 /* UserDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD2DE03281CC9AC00A8A279 /* UserDetailsController.swift */; };
+		3FD2DE06282AD98200A8A279 /* SwipingPhotosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD2DE05282AD98200A8A279 /* SwipingPhotosController.swift */; };
 		3FDECBE8280629CB00C47131 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDECBE7280629CB00C47131 /* SettingsCell.swift */; };
 		3FF2D12827F4EABC00F5D6B1 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF2D12727F4EABC00F5D6B1 /* RegistrationViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -63,6 +64,7 @@
 		3F72E17527F27CB200AC7320 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		3F8BD5CE27F9799E002B4776 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3FD2DE03281CC9AC00A8A279 /* UserDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsController.swift; sourceTree = "<group>"; };
+		3FD2DE05282AD98200A8A279 /* SwipingPhotosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingPhotosController.swift; sourceTree = "<group>"; };
 		3FDECBE7280629CB00C47131 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		3FF2D12727F4EABC00F5D6B1 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		D277E2E485CE4DC512FD3DBB /* Pods_TinderFirestoreClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TinderFirestoreClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -183,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				3FD2DE03281CC9AC00A8A279 /* UserDetailsController.swift */,
+				3FD2DE05282AD98200A8A279 /* SwipingPhotosController.swift */,
 			);
 			path = UserDetails;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 				3F184AB327DAD92800F1FF9A /* Extensions+UIView.swift in Sources */,
 				3F184AA027DAD08200F1FF9A /* SceneDelegate.swift in Sources */,
 				3FDECBE8280629CB00C47131 /* SettingsCell.swift in Sources */,
+				3FD2DE06282AD98200A8A279 /* SwipingPhotosController.swift in Sources */,
 				3F23B13227E2801B00CE6C2C /* CardViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
