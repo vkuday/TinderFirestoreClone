@@ -9,20 +9,24 @@ import UIKit
 
 class SwipingPhotosController: UIPageViewController, UIPageViewControllerDataSource {
     
-    let controllers = [
-        PhotoController(image: UIImage(named: "jane1")!),
-        PhotoController(image: UIImage(named: "jane2")!),
-        PhotoController(image: UIImage(named: "jane1")!),
-        PhotoController(image: UIImage(named: "jane1")!)
-    ]
+    var cardViewModel: CardViewModel! {
+        didSet {
+            controllers = cardViewModel.imageUrls.map({ imageUrl -> UIViewController in
+                let photoController = PhotoController(imageUrl: imageUrl)
+                return photoController
+            })
+            
+            setViewControllers([controllers.first!], direction: .forward, animated: false)
+        }
+    }
+    
+    var controllers = [UIViewController]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         dataSource = self
         
         view.backgroundColor = .white
-        
-        setViewControllers([controllers.first!], direction: .forward, animated: true)
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
@@ -42,8 +46,10 @@ class PhotoController: UIViewController {
     
     let imageView = UIImageView(image: UIImage(named: "jane1"))
     
-    init(image: UIImage) {
-        imageView.image = image
+    init(imageUrl: String) {
+        if let url = URL(string: imageUrl) {
+            imageView.sd_setImage(with: url)
+        }
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -56,6 +62,7 @@ class PhotoController: UIViewController {
         
         view.addSubview(imageView)
         imageView.fillSuperview()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
     }
 }
