@@ -96,7 +96,9 @@ class LoginController: UIViewController {
     }()
     
     @objc fileprivate func handleBack() {
-        navigationController?.popViewController(animated: true)
+        let registrationController = RegistrationController()
+        navigationController?.pushViewController(registrationController, animated: true)
+//        navigationController?.popViewController(animated: true)
     }
     
     override func viewDidLoad() {

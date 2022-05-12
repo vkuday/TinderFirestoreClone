@@ -21,7 +21,7 @@ class CardView: UIView {
             let imageName = cardViewModel.imageUrls.first ?? ""
             // load our image using some kind of url
             if let url = URL(string: imageName) {
-                imageView.sd_setImage(with: url)
+                imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "photo_placeholder"), options: .continueInBackground)
             }
             
             informationLabel.attributedText = cardViewModel.attributedString
@@ -42,7 +42,7 @@ class CardView: UIView {
         cardViewModel.imageIndexObserver = { [weak self] (index, imageUrl) in
             guard let self = self else { return }
             if let url = URL(string: imageUrl ?? "") {
-                self.imageView.sd_setImage(with: url)
+                self.imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "photo_placeholder"), options: .continueInBackground)
             }
             
             self.barsStackView.arrangedSubviews.forEach({$0.backgroundColor = self.barDeselectedColor})
