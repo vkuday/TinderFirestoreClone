@@ -32,6 +32,7 @@
 		3F8BD5CF27F9799E002B4776 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F8BD5CE27F9799E002B4776 /* GoogleService-Info.plist */; };
 		3FD2DE04281CC9AC00A8A279 /* UserDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD2DE03281CC9AC00A8A279 /* UserDetailsController.swift */; };
 		3FD2DE06282AD98200A8A279 /* SwipingPhotosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD2DE05282AD98200A8A279 /* SwipingPhotosController.swift */; };
+		3FD2DE352846A2DD00A8A279 /* PhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD2DE342846A2DD00A8A279 /* PhotoController.swift */; };
 		3FDECBE8280629CB00C47131 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDECBE7280629CB00C47131 /* SettingsCell.swift */; };
 		3FF2D12827F4EABC00F5D6B1 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF2D12727F4EABC00F5D6B1 /* RegistrationViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -65,6 +66,7 @@
 		3F8BD5CE27F9799E002B4776 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3FD2DE03281CC9AC00A8A279 /* UserDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsController.swift; sourceTree = "<group>"; };
 		3FD2DE05282AD98200A8A279 /* SwipingPhotosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingPhotosController.swift; sourceTree = "<group>"; };
+		3FD2DE342846A2DD00A8A279 /* PhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoController.swift; sourceTree = "<group>"; };
 		3FDECBE7280629CB00C47131 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		3FF2D12727F4EABC00F5D6B1 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		D277E2E485CE4DC512FD3DBB /* Pods_TinderFirestoreClone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TinderFirestoreClone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -186,6 +188,7 @@
 			children = (
 				3FD2DE03281CC9AC00A8A279 /* UserDetailsController.swift */,
 				3FD2DE05282AD98200A8A279 /* SwipingPhotosController.swift */,
+				3FD2DE342846A2DD00A8A279 /* PhotoController.swift */,
 			);
 			path = UserDetails;
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F20B72C280F90F9008CF8C8 /* LoginController.swift in Sources */,
+				3FD2DE352846A2DD00A8A279 /* PhotoController.swift in Sources */,
 				3F20B729280F89D8008CF8C8 /* Firebase+Utils.swift in Sources */,
 				3F72E17227E4415E00AC7320 /* Advertiser.swift in Sources */,
 				3F5C2CB327DDD61A00B45BF6 /* CardView.swift in Sources */,
